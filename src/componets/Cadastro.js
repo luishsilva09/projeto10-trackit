@@ -1,41 +1,64 @@
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import styled from 'styled-components';
 import Logo from '../assets/Logo.svg';
 import axios from 'axios';
 import React from "react";
-import {ThreeDots} from 'react-loader-spinner'
+import { ThreeDots } from 'react-loader-spinner'
 
-export default function Cadastro(){
+export default function Cadastro() {
     const navigate = useNavigate();
     const [load, setLoad] = React.useState(false)
-    const [cadastro, setCadastro] =React.useState({
-        email:'',
+    const [cadastro, setCadastro] = React.useState({
+        email: '',
         name: '',
         image: '',
-        password:''
+        password: ''
     })
-    function cadastrar(event){
+    function cadastrar(event) {
         event.preventDefault()
         setLoad(true)
-        const promise = axios.post('https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/sign-up',cadastro)
-        promise.then(()=> navigate('/'))
-        promise.catch(function(){
+        const promise = axios.post('https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/sign-up', cadastro)
+        promise.then(() => navigate('/'))
+        promise.catch(function () {
             alert("Desculpe tente novamente mais tarde")
             setLoad(false)
         })
-        
+
     }
-    return(
+    return (
         <Container>
-           <img src={Logo} alt="logo taskit"/>
-           <Form  onSubmit={(event) => cadastrar(event)}>
-               <input type="email" disabled={load} placeholder="email" value={cadastro.email} onChange={(e) => setCadastro({...cadastro,email :e.target.value})}></input>
-               <input type="password"  disabled={load} placeholder="senha" value={cadastro.senha} onChange={(e) => setCadastro({...cadastro ,password:e.target.value})}></input>
-               <input type="text" disabled={load} placeholder="nome" value={cadastro.name} onChange={(e) => setCadastro({...cadastro ,name:e.target.value})}></input>
-               <input placeholder="foto" disabled={load} value={cadastro.image} onChange={(e) => setCadastro({...cadastro ,image:e.target.value})}></input>
-               <button  disabled={load} type="submit" >{load ? <ThreeDots color="#FFFFFF" height={80} width={80} />: <p>Cadastrar</p>}</button>
-           </Form>
-           <Link to="/"><p>Já tem uma conta? Faça login</p></Link>
+            <img src={Logo} alt="logo taskit" />
+            <Form onSubmit={(event) => cadastrar(event) } ativa={load} >
+                <input
+                    type="email"
+                    disabled={load}
+                    placeholder="email"
+                    value={cadastro.email}
+                    onChange={(e) => setCadastro({ ...cadastro, email: e.target.value })}
+                />
+                <input
+                    type="password"
+                    disabled={load}
+                    placeholder="senha"
+                    value={cadastro.senha}
+                    onChange={(e) => setCadastro({ ...cadastro, password: e.target.value })}
+                />
+                <input
+                    type="text"
+                    disabled={load}
+                    placeholder="nome"
+                    value={cadastro.name}
+                    onChange={(e) => setCadastro({ ...cadastro, name: e.target.value })}
+                />
+                <input
+                    placeholder="foto"
+                    disabled={load}
+                    value={cadastro.image}
+                    onChange={(e) => setCadastro({ ...cadastro, image: e.target.value })}
+                />
+                <button disabled={load} type="submit" >{load ? <ThreeDots color="#FFFFFF" height={80} width={80} /> : <p>Cadastrar</p>}</button>
+            </Form>
+            <Link to="/"><p>Já tem uma conta? Faça login!</p></Link>
         </Container>
     )
 }
@@ -66,7 +89,7 @@ const Form = styled.form`
     input{
         height: 45px;
         width: 303px;
-        background-color: #FFFFFF;
+        background-color: ${props => props.ativa ? "#F2F2F2" : "#FFFFFF"};
         border: 1px solid #D5D5D5;
         border-radius: 5px;
         margin-bottom: 6px;

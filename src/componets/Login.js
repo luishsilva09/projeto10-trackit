@@ -6,7 +6,6 @@ import {ThreeDots} from 'react-loader-spinner'
 export default function Login() {
     return (
         <Container>
-            <ThreeDots color="#00BFFF" height={80} width={80} />
             <img src={Logo} alt="Logo trakit" />
             <Form>
                 <input type='email'placeholder="email"></input>
