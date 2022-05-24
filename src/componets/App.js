@@ -7,6 +7,7 @@ import Habitos from './Habitos';
 import Hoje from './Hoje';
 import Historico from './Historico';
 
+
 export default function App(){
     return(
 

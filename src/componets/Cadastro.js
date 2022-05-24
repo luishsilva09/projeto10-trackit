@@ -3,9 +3,11 @@ import styled from 'styled-components';
 import Logo from '../assets/Logo.svg';
 import axios from 'axios';
 import React from "react";
+import {ThreeDots} from 'react-loader-spinner'
 
 export default function Cadastro(){
-    const navigate = useNavigate()
+    const navigate = useNavigate();
+    const [load, setLoad] = React.useState(false)
     const [cadastro, setCadastro] =React.useState({
         email:'',
         name: '',
@@ -14,20 +16,24 @@ export default function Cadastro(){
     })
     function cadastrar(event){
         event.preventDefault()
+        setLoad(true)
         const promise = axios.post('https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/sign-up',cadastro)
         promise.then(()=> navigate('/'))
-        promise.catch(err => alert("Desculpe tente mais tarde"))
+        promise.catch(function(){
+            alert("Desculpe tente novamente mais tarde")
+            setLoad(false)
+        })
         
     }
     return(
         <Container>
            <img src={Logo} alt="logo taskit"/>
-           <Form onSubmit={(event) => cadastrar(event)}>
-               <input type="email" placeholder="email" value={cadastro.email} onChange={(e) => setCadastro({...cadastro,email :e.target.value})}></input>
-               <input type="password" placeholder="senha" value={cadastro.senha} onChange={(e) => setCadastro({...cadastro ,password:e.target.value})}></input>
-               <input type="text" placeholder="nome" value={cadastro.name} onChange={(e) => setCadastro({...cadastro ,name:e.target.value})}></input>
-               <input placeholder="foto" value={cadastro.image} onChange={(e) => setCadastro({...cadastro ,image:e.target.value})}></input>
-               <button type="submit">Cadastrar</button>
+           <Form  onSubmit={(event) => cadastrar(event)}>
+               <input type="email" disabled={load} placeholder="email" value={cadastro.email} onChange={(e) => setCadastro({...cadastro,email :e.target.value})}></input>
+               <input type="password"  disabled={load} placeholder="senha" value={cadastro.senha} onChange={(e) => setCadastro({...cadastro ,password:e.target.value})}></input>
+               <input type="text" disabled={load} placeholder="nome" value={cadastro.name} onChange={(e) => setCadastro({...cadastro ,name:e.target.value})}></input>
+               <input placeholder="foto" disabled={load} value={cadastro.image} onChange={(e) => setCadastro({...cadastro ,image:e.target.value})}></input>
+               <button  disabled={load} type="submit" >{load ? <ThreeDots color="#FFFFFF" height={80} width={80} />: <p>Cadastrar</p>}</button>
            </Form>
            <Link to="/"><p>Já tem uma conta? Faça login</p></Link>
         </Container>
@@ -75,12 +81,18 @@ const Form = styled.form`
     button{
         height: 45px;
         width: 303px;
-        font-size: 21px;
-        color:#fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
         background-color: #52B6FF;
         border-radius: 4.63636px;
         border:none;
 
+        p{
+            font-size: 21px;
+            color:#fff;
+            text-decoration: none;
+        }
         &:hover{
             cursor:pointer;
             filter: brightness(130%);
