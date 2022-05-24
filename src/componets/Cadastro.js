@@ -1,17 +1,33 @@
-import { Link } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import styled from 'styled-components';
-import Logo from '../assets/Logo.svg'
+import Logo from '../assets/Logo.svg';
+import axios from 'axios';
+import React from "react";
 
 export default function Cadastro(){
+    const navigate = useNavigate()
+    const [cadastro, setCadastro] =React.useState({
+        email:'',
+        name: '',
+        image: '',
+        password:''
+    })
+    function cadastrar(event){
+        event.preventDefault()
+        const promise = axios.post('https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/sign-up',cadastro)
+        promise.then(()=> navigate('/'))
+        promise.catch(err => alert("Desculpe tente mais tarde"))
+        
+    }
     return(
         <Container>
            <img src={Logo} alt="logo taskit"/>
-           <Form>
-               <input type="email" placeholder="email"></input>
-               <input type="password" placeholder="senha"></input>
-               <input type="text" placeholder="nome" ></input>
-               <input placeholder="foto"></input>
-               <button>Cadastrar</button>
+           <Form onSubmit={(event) => cadastrar(event)}>
+               <input type="email" placeholder="email" value={cadastro.email} onChange={(e) => setCadastro({...cadastro,email :e.target.value})}></input>
+               <input type="password" placeholder="senha" value={cadastro.senha} onChange={(e) => setCadastro({...cadastro ,password:e.target.value})}></input>
+               <input type="text" placeholder="nome" value={cadastro.name} onChange={(e) => setCadastro({...cadastro ,name:e.target.value})}></input>
+               <input placeholder="foto" value={cadastro.image} onChange={(e) => setCadastro({...cadastro ,image:e.target.value})}></input>
+               <button type="submit">Cadastrar</button>
            </Form>
            <Link to="/"><p>Já tem uma conta? Faça login</p></Link>
         </Container>
