@@ -17,7 +17,7 @@ export default function Login() {
 }
 
 const Container = styled.div`
-   margin: auto;
+    margin-top: 70px;
     display: flex;
     flex-direction: column;
     align-items: center;
