@@ -3,7 +3,8 @@ import styled from 'styled-components';
 import Logo from '../assets/Logo.svg';
 import { ThreeDots } from 'react-loader-spinner';
 import axios from "axios";
-import React from "react";
+import React, { useContext } from "react";
+import UserContext from "../Context/UserContext";
 
 export default function Login() {
     const navigate = useNavigate();
@@ -12,14 +13,14 @@ export default function Login() {
         email: '',
         password: ''
     })
-    const [responseData, setResponseData] = React.useState([])
+    const{userData, setUserData} = useContext(UserContext)
     function logar(event) {
         event.preventDefault()
         setLoad(true)
         const promise = axios.post('https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/login', login);
         promise.then(function(response){
             navigate('/hoje')
-            setResponseData(response.data)
+            setUserData(response.data)
         })
         promise.catch(function() {
             setLoad(false)
