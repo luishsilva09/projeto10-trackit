@@ -28,7 +28,7 @@ export default function Cadastro() {
     return (
         <Container>
             <img src={Logo} alt="logo taskit" />
-            <Form onSubmit={(event) => cadastrar(event) } ativa={load} >
+            <Form onSubmit={(event) => cadastrar(event)} ativa={load} >
                 <input
                     type="email"
                     disabled={load}
@@ -56,7 +56,11 @@ export default function Cadastro() {
                     value={cadastro.image}
                     onChange={(e) => setCadastro({ ...cadastro, image: e.target.value })}
                 />
-                <button disabled={load} type="submit" >{load ? <ThreeDots color="#FFFFFF" height={80} width={80} /> : <p>Cadastrar</p>}</button>
+                <button
+                    disabled={load}
+                    type="submit" >
+                    {load ? <ThreeDots color="#FFFFFF" height={80} width={80} /> : <p>Cadastrar</p>}
+                </button>
             </Form>
             <Link to="/"><p>Já tem uma conta? Faça login!</p></Link>
         </Container>
