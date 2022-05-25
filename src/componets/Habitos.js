@@ -7,11 +7,32 @@ import ListaHabitos from "./ListaHabitos";
 import UserContext from "../Context/UserContext";
 import axios from "axios";
 
+function Render({ habitos, atualiza}){
+    const [habito, setHabito] = React.useState([])
+    function mais() {
+        setHabito(<AddHabito setHabito={setHabito} atualiza={atualiza} />)
 
+    }
+    return(
+        <>
+        <TopBar />
+            <Main>
+                <h1>
+                    Meus hábitos <Mais onClick={mais}>+</Mais>
+                </h1>
+                {habito}
+                {habitos.map((e, index) => <ListaHabitos key={index} name={e.name} days={e.days} id={e.id} atualiza={atualiza} />)}
+                {habitos.length > 0 ? "" :
+                    <p>Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!</p>}
+            </Main>
+            <Footer />
+        </>
+    )
+}
 export default function Habitos() {
-    const [habito, setHabito] = React.useState([null])
+    
     const [habitos, setHabitos] = React.useState([])
-    const [teste, setTeste ] = React.useState(false)
+    const [teste, setTeste ] = React.useState([])
     const { userData } = useContext(UserContext)
     const config = {
         headers: {
@@ -19,30 +40,20 @@ export default function Habitos() {
         }
     }
     
-    React.useEffect(() => {
-        const promise = axios.get('https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits', config)
-        promise.then((response) => setHabitos(response.data))
+    React.useEffect(() => { 
+        
+        atualiza()
     }, [])
-
-    function mais() {
-        setHabito(<AddHabito setHabito={setHabito} />)
-
-    }
+function atualiza(){
+    const promise = axios.get('https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits', config)
+        promise.then((response) => setHabitos(response.data))
+}
+    
     
     return (
 
         <>
-            <TopBar />
-            <Main>
-                <h1>
-                    Meus hábitos <Mais onClick={mais}>+</Mais>
-                </h1>
-                {habito}
-                {habitos.map((e, index) => <ListaHabitos key={index} name={e.name} days={e.days} id={e.id} />)}
-                {habitos.length > 0 ? "" :
-                    <p>Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!</p>}
-            </Main>
-            <Footer />
+            <Render  habitos={habitos} atualiza={atualiza}/>
         </>
     )
 }

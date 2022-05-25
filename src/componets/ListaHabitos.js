@@ -4,7 +4,7 @@ import React, { useContext } from "react"
 import styled from "styled-components";
 import Lixo from '../assets/lixo.svg'
 
-export default function ListaHabitos({name,days, id}) {
+export default function ListaHabitos({name,days, id, atualiza}) {
     const dias = ['D', 'S', 'T', 'Q', 'Q', 'S', 'S']
     const{userData} = useContext(UserContext);
     
@@ -26,7 +26,6 @@ export default function ListaHabitos({name,days, id}) {
     }
     function deletar(id){
         let confirm = window.confirm("tem certeza que quer deletar esse habito?")
-        console.log(confirm)
         if(confirm == true){
             const config = {
                 headers:{
@@ -34,6 +33,7 @@ export default function ListaHabitos({name,days, id}) {
                 }
             }
             const promise = axios.delete(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}`,config)
+            promise.then(()=> atualiza())
         }
        
     }

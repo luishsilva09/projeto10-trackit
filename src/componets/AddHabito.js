@@ -5,7 +5,7 @@ import UserContext from "../Context/UserContext";
 import { ThreeDots } from 'react-loader-spinner';
 import { useNavigate } from "react-router-dom";
 
-export default function AddHabito({ setHabito }) {
+export default function AddHabito({ setHabito ,atualiza}) {
     const dias = ['D', 'S', 'T', 'Q', 'Q', 'S', 'S']
     const [diasSelecionado, setDiasSelecionados] = React.useState([])
     const[nomeHabito,setNomeHabito] = React.useState([])
@@ -47,6 +47,7 @@ export default function AddHabito({ setHabito }) {
         const promise = axios.post('https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits',body, config)
         promise.then(function(response) {
             setHabito([])
+            atualiza()
             
             
             
