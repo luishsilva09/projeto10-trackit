@@ -2,13 +2,16 @@ import axios from "axios"
 import React,{ useContext } from "react"
 import styled from "styled-components"
 import UserContext from "../Context/UserContext";
+import { ThreeDots } from 'react-loader-spinner';
+import { useNavigate } from "react-router-dom";
 
 export default function AddHabito({ setHabito }) {
     const dias = ['D', 'S', 'T', 'Q', 'Q', 'S', 'S']
     const [diasSelecionado, setDiasSelecionados] = React.useState([])
     const[nomeHabito,setNomeHabito] = React.useState([])
-    const{userData} = useContext(UserContext)
-
+    const{userData} = useContext(UserContext);
+    const [load, setLoad] = React.useState(false);
+    let navigate = useNavigate();
     function cancelar() {
         setHabito([])
     }
@@ -25,7 +28,7 @@ export default function AddHabito({ setHabito }) {
             }     
         }
         return (
-            <Check onClick={(element) => seleciona(element)} cor={color}>{e}</Check>
+            <Check  key={index} onClick={load ? none : (element) => seleciona(element)} cor={color}>{e}</Check>
         )
     }
     function salvar(){
@@ -38,8 +41,22 @@ export default function AddHabito({ setHabito }) {
                 "Authorization": `Bearer ${userData.token}`
             }
         }
+        setLoad(true)
         const promise = axios.post('https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits',body, config)
-        promise.then((response)=> console.log(response.data))
+        promise.then(function(response) {
+            setHabito([])
+            
+            
+            
+        })
+        promise.catch(function(response){
+            setLoad(false)
+            alert("Tente mais tarde" )
+        })
+        
+    }
+    function none(){
+
     }
     return (
         <Container>
@@ -48,6 +65,7 @@ export default function AddHabito({ setHabito }) {
                 placeholder='nome do habito' 
                 value={nomeHabito}
                 onChange={(e) => setNomeHabito(e.target.value)}
+                disabled={load}
                 />
             <Dias>
                 {dias.map((e, index) => RenderCheck(e, index))}
@@ -55,7 +73,7 @@ export default function AddHabito({ setHabito }) {
             </Dias>
             <Finalizar>
                 <Cancelar onClick={cancelar}>Cancelar</Cancelar>
-                <Salvar onClick={salvar}>Salvar</Salvar>
+                <Salvar onClick={load ? none: salvar}>{load ? <ThreeDots color="#FFFFFF" height={50} width={50} /> : <>Salvar</>}</Salvar>
             </Finalizar>
 
         </Container>

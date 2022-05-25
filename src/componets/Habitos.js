@@ -2,14 +2,33 @@ import styled from "styled-components";
 import Footer from "./Footer";
 import TopBar from "./TopBar";
 import AddHabito from "./AddHabito";
-import React from "react";
+import React,{ useContext }  from "react";
+import ListaHabitos from "./ListaHabitos";
+import UserContext from "../Context/UserContext";
+import axios from "axios";
 
 
 export default function Habitos() {
     const [habito, setHabito] = React.useState([])
+    const [habitos, setHabitos] = React.useState([])
+    const { userData } = useContext(UserContext)
+    const config = {
+        headers: {
+            "Authorization": `Bearer ${userData.token}`
+        }
+    }
+
+    React.useEffect(() => {
+        const promise = axios.get('https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits', config)
+        promise.then((response) => setHabitos(response.data))
+        console.log(habitos)
+    }
+
+        , [])
     function mais(){
         setHabito(<AddHabito setHabito={setHabito}/>)
     }
+
     return (
 
         <>
@@ -19,7 +38,9 @@ export default function Habitos() {
                     Meus hábitos <Mais onClick={mais}>+</Mais>
                 </h1>
                 {habito}
-                <p>Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!</p>
+                {habitos.map((e, index) => <ListaHabitos key={index} name={e.name} days={e.days} id={e.id}/>)}
+                {habitos.length > 0 ? "":
+                    <p>Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!</p>}
             </Main>
             <Footer />
         </>
@@ -32,6 +53,7 @@ const Main = styled.div`
     flex-direction: column;
     padding: 20px;
     align-items: center;
+    margin-bottom: 90px;
     
     h1{
         font-size: 23px;
