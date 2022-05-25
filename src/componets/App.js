@@ -7,12 +7,15 @@ import Habitos from './Habitos';
 import Hoje from './Hoje';
 import Historico from './Historico';
 import UserContext from "../Context/UserContext";
+import ProgressoContext from "../Context/ProgressoContext";
 import React from "react";
 
 export default function App() {
     const [userData, setUserData] = React.useState([])
+    const [progresso, setProgresso] = React.useState([99])
     return (
         <UserContext.Provider value={{userData, setUserData}}>
+        <ProgressoContext.Provider value={{progresso, setProgresso}}>
             <BrowserRouter>
                 <GlobalStyle />
                 <Routes>
@@ -23,6 +26,7 @@ export default function App() {
                     <Route path='/historico' element={<Historico />} />
                 </Routes>
             </BrowserRouter>
+            </ProgressoContext.Provider>
         </UserContext.Provider>
     )
 }

@@ -4,11 +4,11 @@ import UserContext from "../Context/UserContext";
 import Logo from '../assets/TrackIt.png';
 
 export default function TopBar(){
-    const{userData, setUserData} = useContext(UserContext)
+    const{userData} = useContext(UserContext)
     return(
         <Container >
-            <img src={Logo}/>
-            <Perfil src={userData.image}/>
+            <img src={Logo} alt="logo escrita"/>
+            <Perfil src={userData.image} alt="Fotoperfil"/>
         </Container>
     )
 }
@@ -22,6 +22,9 @@ const Container = styled.div`
     align-items: center;
     justify-content: space-between;
     padding: 18px;
+    position: fixed;
+    left: 0;
+    top: 0;
 `
 const Perfil = styled.img`
     width: 51px;
