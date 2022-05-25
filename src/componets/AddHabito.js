@@ -12,7 +12,9 @@ export default function AddHabito({ setHabito }) {
     const{userData} = useContext(UserContext);
     const [load, setLoad] = React.useState(false);
     let navigate = useNavigate();
+    
     function cancelar() {
+        
         setHabito([])
     }
     function RenderCheck(e, index) {
@@ -92,6 +94,7 @@ const Container = styled.div`
     padding: 18px;
     flex-direction: column;
     position: relative;
+    margin-bottom: 10px;
 
     input{
         height: 45px;

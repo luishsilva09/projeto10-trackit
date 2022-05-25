@@ -5,7 +5,7 @@ import Footer from "./Footer";
 import TopBar from "./TopBar";
 export default function Hoje() {
     const { userData } = useContext(UserContext)
-    console.log(userData)
+    
     return (
         <Container>
                 <TopBar />

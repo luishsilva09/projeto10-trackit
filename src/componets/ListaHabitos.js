@@ -9,6 +9,7 @@ export default function ListaHabitos({name,days, id}) {
     const{userData} = useContext(UserContext);
     
     
+    
     function RenderCheck(e,index){
         const [cor, setCor] = React.useState(false)
         let teste = days.includes(index)
@@ -24,12 +25,17 @@ export default function ListaHabitos({name,days, id}) {
         }
     }
     function deletar(id){
-        const config = {
-            headers:{
-                "Authorization": `Bearer ${userData.token}`
+        let confirm = window.confirm("tem certeza que quer deletar esse habito?")
+        console.log(confirm)
+        if(confirm == true){
+            const config = {
+                headers:{
+                    "Authorization": `Bearer ${userData.token}`
+                }
             }
+            const promise = axios.delete(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}`,config)
         }
-        const promise = axios.delete(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}`,config)
+       
     }
     return (
         <>
