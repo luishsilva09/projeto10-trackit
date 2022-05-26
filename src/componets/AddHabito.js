@@ -54,7 +54,8 @@ export default function AddHabito({ setHabito ,atualiza}) {
         })
         promise.catch(function(response){
             setLoad(false)
-            alert("Tente mais tarde" )
+            let message = (response.response.data.message)
+            alert("Tente mais tarde" + message)
         })
         
     }
