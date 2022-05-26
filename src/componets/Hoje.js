@@ -3,55 +3,68 @@ import styled from "styled-components";
 import UserContext from "../Context/UserContext";
 import Footer from "./Footer";
 import TopBar from "./TopBar";
-import Check from '../assets/check.svg'
+import ProgressoContext from "../Context/ProgressoContext";
+
 import axios from "axios";
 import dayjs from 'dayjs'
-import 'dayjs/locale/pt-br'
+import RenderPost from "./RenderPostHoje";
+
 dayjs.locale('pt-br')
 
-    
-function RenderPost(){
-    return(
-        <Post>
-                        <div>
-                        <h3>ler</h3>
-                        <p>Sequencia atual</p>
-                        <p>Seu Recorde</p>
-                        </div>
-                        <Feito src={Check} alt="check">
 
-                        </Feito>
-                    </Post>
-    )
-}
+
+
 export default function Hoje() {
     const { userData } = useContext(UserContext)
     const [habitosHoje, setHabitosHoje] = React.useState([])
-    const semana =['Domingo','Segunda','Terça', 'Quarta', 'Quinta', 'Sexta', 'Sabado']
+    const {progresso, setProgresso} = useContext(ProgressoContext)
+    const [load, setLoad] = React.useState(false)
+    const semana = ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sabado']
     let now = dayjs()
-    console.log()
     const config = {
-        headers: {
+        headers:{
             "Authorization": `Bearer ${userData.token}`
         }
     }
+    
+   
+    console.log(progresso)
     React.useEffect(() => {
         atualizaHoje()
-    },[])
-    function atualizaHoje(){
-        const promise = axios.get('https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/today',config)
-        promise.then((response) => setHabitosHoje(response.data))
-    }
-    
-    return (
-        <Container>
-                <TopBar />
-                    <h1>{semana[now.$W]}, {now.$D}/{now.$M}</h1>
-                    <h2>Nenhum habito concluido hoje</h2>
-                    {habitosHoje.map((e) => <RenderPost dados={e}/>)}
-                <Footer />
+    }, [])
+    function atualizaHoje() {
+        const promise = axios.get('https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/today', config)
+        promise.then(function(response){
+            setHabitosHoje(response.data)
             
-        </Container>
+        })
+        
+    }
+    function progress(){
+        let total = habitosHoje.length
+        let feitos = 0
+        habitosHoje.map((e)=>{
+            if(e.done === true){
+                feitos += 1
+            }
+        })
+        setProgresso(feitos/total*100)
+    }
+    return (
+        <>
+            <TopBar />
+            <Container>
+               
+                <h1>{semana[now.$W]}, {now.$D}/{now.$M}</h1>
+                {progresso === 0 ? <h2>Nenhum habito concluido ainda</h2> : <h3>{progresso}% dos habitos concluidos</h3>}
+    
+                { habitosHoje.map((e,index) => <RenderPost key={index} dados={e} config={config} atualizaHoje={atualizaHoje} progress={progress}/>)}
+
+
+            </Container>
+            <Footer />
+        </>
+
     )
 }
 
@@ -68,31 +81,10 @@ const Container = styled.div`
         color:#bababa;
         margin-bottom: 28px;
     }
-`
-const Post = styled.div`
-    width: 95%;
-    height: auto;
-    min-height: 94px;
-    background-color: #fff;
-    border-radius: 5px;
-    margin-bottom:10px ;
-    padding: 14px;
-    display: flex;
-    justify-content: space-between;
-
     h3{
-        font-size: 20px;
-        color:#666666;
-    }
-    p{
-       font-size :13px ;
-       color:#666666;
+        font-size:18px;
+        color:#8FC549;
+        margin-bottom: 28px;
     }
 `
-const Feito =styled.img`
-    width: 69px;
-    height: 69px;
-    border-radius: 5px;
-    border: 1px solid #E7E7E7;
-    background-color: #E7E7E7;
-`
+

@@ -5,7 +5,7 @@ import { CircularProgressbar } from 'react-circular-progressbar'
 import { useContext } from "react";
 
 export default function Footer() {
-    const {progresso, setprogresso} = useContext(ProgressoContext)
+    const {progresso, setProgresso} = useContext(ProgressoContext)
 
     return (
         <Container>
@@ -14,7 +14,7 @@ export default function Footer() {
         </NavLink>
         <NavLink to="/hoje">
             <h1>Hoje</h1>
-            {progresso}
+            {typeof progresso == 'number' ? progresso.toFixed(): progresso}%
         </NavLink>
         <NavLink to="/historico">
             <h1>Histórico</h1>
