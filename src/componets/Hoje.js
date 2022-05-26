@@ -5,7 +5,11 @@ import Footer from "./Footer";
 import TopBar from "./TopBar";
 import Check from '../assets/check.svg'
 import axios from "axios";
+import dayjs from 'dayjs'
+import 'dayjs/locale/pt-br'
+dayjs.locale('pt-br')
 
+    
 function RenderPost(){
     return(
         <Post>
@@ -23,7 +27,9 @@ function RenderPost(){
 export default function Hoje() {
     const { userData } = useContext(UserContext)
     const [habitosHoje, setHabitosHoje] = React.useState([])
-    
+    const semana =['Domingo','Segunda','Terça', 'Quarta', 'Quinta', 'Sexta', 'Sabado']
+    let now = dayjs()
+    console.log()
     const config = {
         headers: {
             "Authorization": `Bearer ${userData.token}`
@@ -40,9 +46,9 @@ export default function Hoje() {
     return (
         <Container>
                 <TopBar />
-                    <h1>Dia de hoje</h1>
+                    <h1>{semana[now.$W]}, {now.$D}/{now.$M}</h1>
                     <h2>Nenhum habito concluido hoje</h2>
-                    {habitosHoje.map((e) => <RenderPost />)}
+                    {habitosHoje.map((e) => <RenderPost dados={e}/>)}
                 <Footer />
             
         </Container>

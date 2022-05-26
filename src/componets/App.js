@@ -1,5 +1,6 @@
 
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+
 import GlobalStyle from './globalStyles';
 import Login from './Login';
 import Cadastro from './Cadastro';
