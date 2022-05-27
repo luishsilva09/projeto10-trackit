@@ -72,16 +72,22 @@ const Container = styled.div`
     background:#E5E5E5 ;
     padding: 17px; 
     margin-bottom: 90px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     h1{
+        width: 340px;
         font-size: 23px;
         color: #126ba5;
     }
     h2{
+        width: 340px;
         font-size:18px;
         color:#bababa;
         margin-bottom: 28px;
     }
     h3{
+        width: 340px;
         font-size:18px;
         color:#8FC549;
         margin-bottom: 28px;

@@ -1,27 +1,45 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import ProgressoContext from "../Context/ProgressoContext";
-import { CircularProgressbar } from 'react-circular-progressbar'
+import { CircularProgressbar, buildStyles } from 'react-circular-progressbar'
 import { useContext } from "react";
+import '../assets/Progress.css'
 
 export default function Footer() {
-    const {progresso} = useContext(ProgressoContext)
+    const { progresso } = useContext(ProgressoContext)
 
     return (
         <Container>
-        <NavLink to="/habitos">
-            <h1>Hábitos</h1>
-        </NavLink>
-        <NavLink to="/hoje">
-            <h1>Hoje</h1>
-            {typeof progresso == 'number' ? progresso.toFixed(): progresso}%
-        </NavLink>
-        <NavLink to="/historico">
-            <h1>Histórico</h1>
+            <NavLink to="/habitos">
+                <h1>Hábitos</h1>
+            </NavLink>
+            <NavLink to="/hoje">
+                <Teste>
+                <CircularProgressbar
+                    value={progresso}
+                    text={`Hoje`}
+                    background={true}
+                    backgroundPadding={6}
+                    styles={buildStyles({
+                        backgroundColor:'#52B6FF',
+                        textColor:'#FFFFFF',
+                        textSize:'18px',
+                        trailColor: '#52B6FF',
+                        pathColor:'#fff'
+                    })}
+                /></Teste>
+            </NavLink>
+            <NavLink to="/historico">
+                <h1>Histórico</h1>
             </NavLink>
         </Container>
     )
 }
+const Teste = styled.div`
+    height: 91px;
+    width: 91px;
+    margin-bottom: 50px;
+`
 
 const Container = styled.div`
     width: 100%;

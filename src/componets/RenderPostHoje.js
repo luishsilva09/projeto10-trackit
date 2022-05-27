@@ -57,6 +57,7 @@ const Ponto= styled.p`
      color:${props => props.cor? "#8FC549": "#666666"};
 `
 const Post = styled.div`
+    max-width: 340px;
     width: 95%;
     height: auto;
     min-height: 94px;
@@ -66,6 +67,7 @@ const Post = styled.div`
     padding: 14px;
     display: flex;
     justify-content: space-between;
+    
     span{
         display: flex;
         font-size :13px
