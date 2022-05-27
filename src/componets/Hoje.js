@@ -4,19 +4,17 @@ import UserContext from "../Context/UserContext";
 import Footer from "./Footer";
 import TopBar from "./TopBar";
 import ProgressoContext from "../Context/ProgressoContext";
-
+import { TailSpin } from  'react-loader-spinner'
 import axios from "axios";
 import dayjs from 'dayjs'
 import RenderPost from "./RenderPostHoje";
 
 dayjs.locale('pt-br')
 
-
-
-
 export default function Hoje() {
     const { userData } = useContext(UserContext)
     const [habitosHoje, setHabitosHoje] = React.useState([])
+    const [load, setLoad] = React.useState(true)
     const {progresso, setProgresso} = useContext(ProgressoContext)
     const semana = ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sabado']
     let now = dayjs()
@@ -26,7 +24,6 @@ export default function Hoje() {
         }
     }
     
-    console.log(progresso)
     React.useEffect(() => {
         atualizaHoje()
     }, [])
@@ -34,7 +31,7 @@ export default function Hoje() {
         const promise = axios.get('https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/today', config)
         promise.then(function(response){
             setHabitosHoje(response.data)
-            
+            setLoad(false)
         })
         
     }
@@ -52,15 +49,16 @@ export default function Hoje() {
     return (
         <>
             <TopBar />
-            <Container>
-               
+            {load ? 
+            <Container><TailSpin color="#00BFFF" height={80} width={80} /></Container>
+            :<Container>
                 <h1>{semana[now.$W]}, {now.$D}/{now.$M < 10 ? `0${now.$M }` : `${now.$M }`}</h1>
                 {progresso === 0 ? <h2>Nenhum habito concluido ainda</h2> : <h3>{progresso.toFixed()}% dos habitos concluidos</h3>}
     
                 { habitosHoje.map((e,index) => <RenderPost key={index} dados={e} config={config} atualizaHoje={atualizaHoje} progress={progress}/>)}
 
 
-            </Container>
+            </Container>}
             <Footer />
         </>
 
@@ -68,13 +66,14 @@ export default function Hoje() {
 }
 
 const Container = styled.div`
-    margin-top:90px;
+    padding-top: 110px;
     background:#E5E5E5 ;
-    padding: 17px; 
-    margin-bottom: 90px;
+    padding-bottom: 90px;
     display: flex;
     flex-direction: column;
     align-items: center;
+    min-height: 100vh;
+    max-width: 100%;
     h1{
         width: 340px;
         font-size: 23px;

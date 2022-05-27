@@ -6,63 +6,77 @@ import React, { useContext } from "react";
 import ListaHabitos from "./ListaHabitos";
 import UserContext from "../Context/UserContext";
 import axios from "axios";
+import { TailSpin } from 'react-loader-spinner'
 
-function Render({ habitos, atualiza}){
+function Render({ habitos, atualiza, load }) {
     const [habito, setHabito] = React.useState([])
+    const [display, setDisplay ]= React.useState("none")
+    
     function mais() {
-        setHabito(<AddHabito setHabito={setHabito} atualiza={atualiza} />)
+        setDisplay("flex")
 
     }
-    return(
-        <>
-        <TopBar />
-            <Main>
+    return (
+        <Container>
+            <TopBar />
+            {load ? <Main><TailSpin color="#00BFFF" height={80} width={80} /></Main> :<Main>
                 <h1>
                     Meus hábitos <Mais onClick={mais}>+</Mais>
                 </h1>
+                <Adicionar display={display}><AddHabito setHabito={setHabito} atualiza={atualiza} setDisplay={setDisplay}/></Adicionar>
                 {habito}
                 {habitos.map((e, index) => <ListaHabitos key={index} name={e.name} days={e.days} id={e.id} atualiza={atualiza} />)}
                 {habitos.length > 0 ? "" :
                     <p>Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!</p>}
-            </Main>
+            </Main>}
             <Footer />
-        </>
+        </Container>
     )
 }
 export default function Habitos() {
     const [habitos, setHabitos] = React.useState([])
     const { userData } = useContext(UserContext)
+    const [load, setLoad] = React.useState(true)
     const config = {
         headers: {
             "Authorization": `Bearer ${userData.token}`
         }
     }
-    
-    React.useEffect(() => { 
-        
+
+    React.useEffect(() => {
+
         atualiza()
     }, [])
-function atualiza(){
-    const promise = axios.get('https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits', config)
-        promise.then((response) => setHabitos(response.data))
-}
-    
-    
-    return (
+    function atualiza() {
+        const promise = axios.get('https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits', config)
+        promise.then(function (response) {
+            setHabitos(response.data)
+            setLoad(false)
+        })
+    }
 
+
+    return (
         <>
-            <Render  habitos={habitos} atualiza={atualiza}/>
+         <Render habitos={habitos} atualiza={atualiza} load={load}/>
         </>
     )
 }
-
+const Adicionar = styled.div`
+width: 340px;
+display: ${props => props.display};
+`
+const Container = styled.div`
+background:#E5E5E5 ;
+min-height: 100vh;
+max-height: 100%;
+`
 const Main = styled.div`
-    margin-top:90px;    
+    padding-top:110px;    
     display: flex;
     flex-direction: column;
-    padding: 20px;
     align-items: center;
-    margin-bottom: 90px;
+    padding-bottom: 110px;
     
     h1{
         font-size: 23px;

@@ -25,6 +25,7 @@ const Container = styled.div`
     position: fixed;
     left: 0;
     top: 0;
+    z-index: 1;
 `
 const Perfil = styled.img`
     width: 51px;

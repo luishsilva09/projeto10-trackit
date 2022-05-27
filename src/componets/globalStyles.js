@@ -7,9 +7,11 @@ const GlobalStyle = createGlobalStyle`
 }
 body{
     font-family: 'Lexend Deca';
-    background-color: #E5E5E5;
 }
 
+.Titulo{
+    background-color: red;
+}
 `
 
 export default GlobalStyle;

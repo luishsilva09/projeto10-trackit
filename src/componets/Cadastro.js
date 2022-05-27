@@ -16,15 +16,25 @@ export default function Cadastro() {
     })
     function cadastrar(event) {
         event.preventDefault()
-        setLoad(true)
-        const promise = axios.post('https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/sign-up', cadastro)
-        promise.then(() => navigate('/'))
-        promise.catch(function () {
-            alert("Desculpe tente novamente mais tarde")
-            setLoad(false)
-        })
-
+        if (isImage(cadastro.image) === true || cadastro.image === "") {
+            setLoad(true)
+            const promise = axios.post('https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/sign-up', cadastro)
+            promise.then(() => navigate('/'))
+            promise.catch(function () {
+                alert("Desculpe tente novamente mais tarde")
+                setLoad(false)
+            })
+        }else{
+            return(alert("imagem invalida"))
+        }
     }
+    function isImage(url) {
+        return /\.(jpg|jpeg|png|webp|avif|gif|svg)$/.test(url);
+    }
+
+
+
+
     return (
         <Container>
             <img src={Logo} alt="logo taskit" />
@@ -35,6 +45,7 @@ export default function Cadastro() {
                     placeholder="email"
                     value={cadastro.email}
                     onChange={(e) => setCadastro({ ...cadastro, email: e.target.value })}
+                    required
                 />
                 <input
                     type="password"
@@ -42,6 +53,7 @@ export default function Cadastro() {
                     placeholder="senha"
                     value={cadastro.senha}
                     onChange={(e) => setCadastro({ ...cadastro, password: e.target.value })}
+                    required
                 />
                 <input
                     type="text"
@@ -49,6 +61,7 @@ export default function Cadastro() {
                     placeholder="nome"
                     value={cadastro.name}
                     onChange={(e) => setCadastro({ ...cadastro, name: e.target.value })}
+                    required
                 />
                 <input
                     placeholder="foto"

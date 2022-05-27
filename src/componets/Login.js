@@ -1,4 +1,4 @@
-import { Link,useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import styled from 'styled-components';
 import Logo from '../assets/Logo.svg';
 import { ThreeDots } from 'react-loader-spinner';
@@ -8,26 +8,27 @@ import UserContext from "../Context/UserContext";
 
 export default function Login() {
     const navigate = useNavigate();
-    const [load, setLoad] = React.useState(false)
+    const { setUserData } = useContext(UserContext);
+    const [load, setLoad] = React.useState(false);
     const [login, setLogin] = React.useState({
         email: '',
         password: ''
-    })
-    const{setUserData} = useContext(UserContext)
+    });
+
     function logar(event) {
-        event.preventDefault()
-        setLoad(true)
+        event.preventDefault();
+        setLoad(true);
         const promise = axios.post('https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/login', login);
-        promise.then(function(response){
+        promise.then(function (response) {
             setUserData(response.data)
             navigate('/hoje')
-        })
-        promise.catch(function() {
+        });
+        promise.catch(function () {
             setLoad(false)
             alert("Email ou senha incorretos")
-        })
-        console.log(login)
-    }
+        });
+    };
+
     return (
         <Container>
             <img src={Logo} alt="Logo trakit" />
@@ -37,22 +38,21 @@ export default function Login() {
                     placeholder="email"
                     value={login.email}
                     disabled={load}
-                    onChange={(e) => setLogin({...login, email: e.target.value})}
-
+                    onChange={(e) => setLogin({ ...login, email: e.target.value })}
                 />
                 <input
                     type='password'
                     placeholder="senha"
                     value={login.password}
                     disabled={load}
-                    onChange={(e) => setLogin({...login, password: e.target.value})}
+                    onChange={(e) => setLogin({ ...login, password: e.target.value })}
                 />
                 <button disabled={load} type="submit">{load ? <ThreeDots color="#FFFFFF" height={80} width={80} /> : <p>Entrar</p>}</button>
             </Form>
             <Link to='/cadastro'> <p>Não tem uma conta? Cadastre-se!</p> </Link>
         </Container>
-    )
-}
+    );
+};
 
 const Container = styled.div`
     margin-top: 70px;
@@ -60,7 +60,7 @@ const Container = styled.div`
     flex-direction: column;
     align-items: center;
     justify-content: center;
-
+    background-color: #fff;
     p{
         font-size:14px;
         color:#52b6ff;
@@ -76,8 +76,6 @@ const Form = styled.form`
     display: flex;
     flex-direction: column;
     margin-bottom: 25px;
-
-    
     input{
         height: 45px;
         width: 303px;

@@ -16,13 +16,13 @@ export default function Historico(){
 }
 
 const Container = styled.div`
-    margin-top:90px;
-    background:#E5E5E5 ;
-    padding: 17px; 
-    margin-bottom: 90px;
+    padding-top:110px;
+    background:#E5E5E5 ; 
+    padding-bottom: 90px;
     display: flex;
     flex-direction: column;
     align-items: center;
+    height: 100vh;
     h1{
         width: 340px;
         font-size: 23px;

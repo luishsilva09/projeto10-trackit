@@ -5,7 +5,7 @@ import UserContext from "../Context/UserContext";
 import { ThreeDots } from 'react-loader-spinner';
 
 
-export default function AddHabito({ setHabito ,atualiza}) {
+export default function AddHabito({ setHabito ,atualiza,setDisplay}) {
     const dias = ['D', 'S', 'T', 'Q', 'Q', 'S', 'S']
     const [diasSelecionado, setDiasSelecionados] = React.useState([])
     const[nomeHabito,setNomeHabito] = React.useState([])
@@ -14,8 +14,8 @@ export default function AddHabito({ setHabito ,atualiza}) {
    
     
     function cancelar() {
+        setDisplay("none")
         
-        setHabito([])
     }
     function RenderCheck(e, index) {
         const [color, setColor] = React.useState(false)
@@ -46,7 +46,10 @@ export default function AddHabito({ setHabito ,atualiza}) {
         setLoad(true)
         const promise = axios.post('https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits',body, config)
         promise.then(function(response) {
-            setHabito([])
+            setDisplay("none")
+            setLoad(false)
+            setNomeHabito('')
+            setDiasSelecionados([])
             atualiza()
             
             
@@ -85,7 +88,7 @@ export default function AddHabito({ setHabito ,atualiza}) {
 }
 
 const Container = styled.div`
-    width: 95%;
+    width: 100%;
     max-width: 340px;
     height: 180px;
     background-color: #fff;
