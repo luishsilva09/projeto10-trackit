@@ -18,7 +18,6 @@ export default function Hoje() {
     const { userData } = useContext(UserContext)
     const [habitosHoje, setHabitosHoje] = React.useState([])
     const {progresso, setProgresso} = useContext(ProgressoContext)
-    const [load, setLoad] = React.useState(false)
     const semana = ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sabado']
     let now = dayjs()
     const config = {
@@ -27,7 +26,6 @@ export default function Hoje() {
         }
     }
     
-   
     console.log(progresso)
     React.useEffect(() => {
         atualizaHoje()
@@ -47,6 +45,7 @@ export default function Hoje() {
             if(e.done === true){
                 feitos += 1
             }
+        return('')
         })
         setProgresso(feitos/total*100)
     }
@@ -55,8 +54,8 @@ export default function Hoje() {
             <TopBar />
             <Container>
                
-                <h1>{semana[now.$W]}, {now.$D}/{now.$M}</h1>
-                {progresso === 0 ? <h2>Nenhum habito concluido ainda</h2> : <h3>{progresso}% dos habitos concluidos</h3>}
+                <h1>{semana[now.$W]}, {now.$D}/{now.$M < 10 ? `0${now.$M }` : `${now.$M }`}</h1>
+                {progresso === 0 ? <h2>Nenhum habito concluido ainda</h2> : <h3>{progresso.toFixed()}% dos habitos concluidos</h3>}
     
                 { habitosHoje.map((e,index) => <RenderPost key={index} dados={e} config={config} atualizaHoje={atualizaHoje} progress={progress}/>)}
 
@@ -71,7 +70,8 @@ export default function Hoje() {
 const Container = styled.div`
     margin-top:90px;
     background:#E5E5E5 ;
-    padding: 17px;
+    padding: 17px; 
+    margin-bottom: 90px;
     h1{
         font-size: 23px;
         color: #126ba5;

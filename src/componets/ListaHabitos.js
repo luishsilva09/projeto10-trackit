@@ -13,20 +13,20 @@ export default function ListaHabitos({name,days, id, atualiza}) {
     function RenderCheck(e,index){
         const [cor, setCor] = React.useState(false)
         let teste = days.includes(index)
-        if( teste == true){
+        if( teste === true){
             return(
-                <Check cor={true}>{e}</Check>
+                <Check key={index} cor={true}>{e}</Check>
             )
             
         }else{
             return(
-                <Check cor={cor}>{e}</Check>
+                <Check  key={index} cor={cor}>{e}</Check>
             )
         }
     }
     function deletar(id){
         let confirm = window.confirm("tem certeza que quer deletar esse habito?")
-        if(confirm == true){
+        if(confirm === true){
             const config = {
                 headers:{
                     "Authorization": `Bearer ${userData.token}`

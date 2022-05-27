@@ -5,7 +5,7 @@ import { CircularProgressbar } from 'react-circular-progressbar'
 import { useContext } from "react";
 
 export default function Footer() {
-    const {progresso, setProgresso} = useContext(ProgressoContext)
+    const {progresso} = useContext(ProgressoContext)
 
     return (
         <Container>

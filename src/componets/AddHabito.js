@@ -3,7 +3,7 @@ import React,{ useContext } from "react"
 import styled from "styled-components"
 import UserContext from "../Context/UserContext";
 import { ThreeDots } from 'react-loader-spinner';
-import { useNavigate } from "react-router-dom";
+
 
 export default function AddHabito({ setHabito ,atualiza}) {
     const dias = ['D', 'S', 'T', 'Q', 'Q', 'S', 'S']
@@ -11,7 +11,7 @@ export default function AddHabito({ setHabito ,atualiza}) {
     const[nomeHabito,setNomeHabito] = React.useState([])
     const{userData} = useContext(UserContext);
     const [load, setLoad] = React.useState(false);
-    let navigate = useNavigate();
+   
     
     function cancelar() {
         
@@ -21,9 +21,9 @@ export default function AddHabito({ setHabito ,atualiza}) {
         const [color, setColor] = React.useState(false)
 
         function seleciona(element) {
-            if (color == true) {
+            if (color === true) {
                 setColor(false)
-                setDiasSelecionados( diasSelecionado.filter((e) => e != index ? index : ''))
+                setDiasSelecionados( diasSelecionado.filter((e) => e !== index ? index : ''))
             } else {
                 setColor(true)
                 setDiasSelecionados([...diasSelecionado, index])

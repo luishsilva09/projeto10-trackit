@@ -13,7 +13,7 @@ import React from "react";
 
 export default function App() {
     const [userData, setUserData] = React.useState([])
-    const [progresso, setProgresso] = React.useState([0])
+    const [progresso, setProgresso] = React.useState(0)
     return (
         <UserContext.Provider value={{userData, setUserData}}>
         <ProgressoContext.Provider value={{progresso, setProgresso}}>

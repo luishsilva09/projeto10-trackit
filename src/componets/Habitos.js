@@ -30,9 +30,7 @@ function Render({ habitos, atualiza}){
     )
 }
 export default function Habitos() {
-    
     const [habitos, setHabitos] = React.useState([])
-    const [teste, setTeste ] = React.useState([])
     const { userData } = useContext(UserContext)
     const config = {
         headers: {

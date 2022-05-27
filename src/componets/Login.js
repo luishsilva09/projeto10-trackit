@@ -13,7 +13,7 @@ export default function Login() {
         email: '',
         password: ''
     })
-    const{userData, setUserData} = useContext(UserContext)
+    const{setUserData} = useContext(UserContext)
     function logar(event) {
         event.preventDefault()
         setLoad(true)

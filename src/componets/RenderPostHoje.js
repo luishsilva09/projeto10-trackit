@@ -1,16 +1,11 @@
-import React, { useContext } from "react";
+import React from "react";
 import axios from "axios";
 import styled from "styled-components";
 import Check from '../assets/check.svg'
-import UserContext from "../Context/UserContext";
-
-
-
-
-
 
 export default function RenderPost({ dados ,config,atualizaHoje,progress}) {
     const [check, setCheck] = React.useState(dados.done)
+    const [cor, setCor] = React.useState(false)
     const body = { };
    progress()
     function feito() {
@@ -32,9 +27,17 @@ export default function RenderPost({ dados ,config,atualizaHoje,progress}) {
     return (
         <Post>
             <div>
-                <h3>{dados.name}</h3>
-                <p>Sequência atual: {dados.currentSequence}</p>
-                <p>Seu Recorde: {dados.highestSequence}</p>
+                <h4>{dados.name}</h4>
+                <span>
+                <h5>Sequência atual: </h5>
+                <Ponto cor={check }> {dados.currentSequence} {dados.currentSequence === 1 ? "dia" : "dias"}</Ponto>
+                </span>
+                <span>
+
+                <h5>Seu Recorde: </h5>
+                <Ponto cor={dados.currentSequence === dados.highestSequence && check=== true && dados.highestSequence > 0? true : false}> {dados.highestSequence} {dados.highestSequence === 1 ? "dia": "dias"}</Ponto>
+                </span>
+                
             </div>
             <Feito src={Check} feito={check } onClick={() => feito()} alt="check">
 
@@ -49,6 +52,10 @@ const Feito = styled.img`
     border: 1px solid #E7E7E7;
     background-color: ${props => props.feito ? '#8FC549' : '#E7E7E7'};
 `
+const Ponto= styled.p`
+    
+     color:${props => props.cor? "#8FC549": "#666666"};
+`
 const Post = styled.div`
     width: 95%;
     height: auto;
@@ -59,13 +66,17 @@ const Post = styled.div`
     padding: 14px;
     display: flex;
     justify-content: space-between;
-
-    h3{
+    span{
+        display: flex;
+        font-size :13px
+    }
+   
+    h4{
         font-size: 20px;
         color:#666666;
     }
-    p{
-       font-size :13px ;
-       color:#666666;
+    h5{
+        font-size :13px ;
+        color:#666666;
     }
 `
