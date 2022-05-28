@@ -67,6 +67,7 @@ const Post = styled.div`
     padding: 14px;
     display: flex;
     justify-content: space-between;
+    align-items: center;
     
     span{
         display: flex;
