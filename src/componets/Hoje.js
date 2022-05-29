@@ -16,7 +16,7 @@ export default function Hoje() {
     const [habitosHoje, setHabitosHoje] = React.useState([])
     const [load, setLoad] = React.useState(true)
     const {progresso, setProgresso} = useContext(ProgressoContext)
-    const semana = ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sabado']
+    const semana = ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado']
     let now = dayjs()
     const config = {
         headers:{
@@ -74,6 +74,7 @@ const Container = styled.div`
     align-items: center;
     min-height: 100vh;
     max-width: 100%;
+    word-break: break-all;
     h1{
         width: 340px;
         font-size: 23px;

@@ -60,6 +60,7 @@ const Container = styled.div`
     border-radius: 5px;
     max-width: 340px;
     padding:12px;
+    word-break: break-all;
     h1{
         margin: 8px;
         color: #666666;
