@@ -5,24 +5,28 @@ import Check from '../assets/check.svg'
 
 export default function RenderPost({ dados ,config,atualizaHoje,progress}) {
     const [check, setCheck] = React.useState(dados.done)
-    const [cor, setCor] = React.useState(false)
+    const [load, setLoad] = React.useState(false)
     const body = { };
    progress()
     function feito() {
+        setLoad(true)
         if(check === false){
             
             const promise = axios.post(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${dados.id}/check`, body, config)
-            promise.then(()=> atualizaHoje())
+            promise.then(()=> {atualizaHoje();setLoad(false)})
             setCheck(true)
             
         }
         if(check === true){
             const promise = axios.post(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${dados.id}/uncheck`,body, config)
-            promise.then(()=> atualizaHoje())
+            promise.then(()=>  {atualizaHoje();setLoad(false)})
             setCheck(false)
             
            
         }
+    }
+    function none(){
+
     }
     return (
         <Post>
@@ -39,7 +43,7 @@ export default function RenderPost({ dados ,config,atualizaHoje,progress}) {
                 </span>
                 
             </div>
-            <Feito src={Check} feito={check } onClick={() => feito()} alt="check">
+            <Feito src={Check} feito={check } onClick={() => {load ? none() : feito()}} alt="check">
 
             </Feito>
         </Post>

@@ -12,6 +12,7 @@ import RenderPost from "./RenderPostHoje";
 dayjs.locale('pt-br')
 
 export default function Hoje() {
+   
     const { userData } = useContext(UserContext)
     const [habitosHoje, setHabitosHoje] = React.useState([])
     const [load, setLoad] = React.useState(true)
