@@ -2,21 +2,21 @@ import React, { useContext } from "react";
 import styled from "styled-components";
 import UserContext from "../Context/UserContext";
 import Logo from '../assets/TrackIt.png';
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
-export default function TopBar(){
-    const{userData} = useContext(UserContext)
+export default function TopBar() {
+    const { userData } = useContext(UserContext)
     const navigate = useNavigate();
-    function sair(){
+    function sair() {
         const sair = window.confirm("Quer realmente sair?")
-        if(sair === true ){
+        if (sair === true) {
             navigate('/')
         }
     }
-    return(
+    return (
         <Container >
-            <img src={Logo} onClick={sair} alt="logo escrita"/>
-            <Perfil src={userData.image} alt="Fotoperfil"/>
+            <img src={Logo} onClick={sair} alt="logo escrita" />
+            <Perfil src={userData.image} alt="Fotoperfil" />
         </Container>
     )
 }

@@ -2,16 +2,15 @@ import Footer from "./Footer";
 import TopBar from "./TopBar";
 import styled from "styled-components";
 
-export default function Historico(){
-    
-    return(
+export default function Historico() {
+    return (
         <>
-        <TopBar/>
-        <Container>
-            <h1>Historico</h1>
-            <h2>Em breve você poderá ver o histórico dos seus hábitos aqui!</h2>
-        </Container>
-        <Footer/>
+            <TopBar />
+            <Container>
+                <h1>Historico</h1>
+                <h2>Em breve você poderá ver o histórico dos seus hábitos aqui!</h2>
+            </Container>
+            <Footer />
         </>
     )
 }

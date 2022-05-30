@@ -17,7 +17,7 @@ export default function Cadastro() {
     function cadastrar(event) {
         event.preventDefault()
         if (isImage(cadastro.image) === true || cadastro.image === "") {
-            if(cadastro.image === ''){
+            if (cadastro.image === '') {
                 cadastro.image = 'https://icones.pro/wp-content/uploads/2021/02/icone-utilisateur-gris.png'
             }
             setLoad(true)
@@ -27,18 +27,14 @@ export default function Cadastro() {
                 alert("Desculpe tente novamente mais tarde")
                 setLoad(false)
             })
-        }else{
+        } else {
             cadastro.image = ""
-            return(alert("imagem invalida"))
+            return (alert("imagem invalida"))
         }
     }
     function isImage(url) {
         return /\.(jpg|jpeg|png|webp|avif|gif|svg)$/.test(url);
     }
-
-
-
-
     return (
         <Container>
             <img src={Logo} alt="logo taskit" />

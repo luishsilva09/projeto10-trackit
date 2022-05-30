@@ -9,7 +9,6 @@ import axios from "axios";
 import { TailSpin } from 'react-loader-spinner'
 
 function Render({ habitos, atualiza, load }) {
-    const [habito, setHabito] = React.useState([])
     const [display, setDisplay ]= React.useState("none")
     
     function mais() {
@@ -22,7 +21,7 @@ function Render({ habitos, atualiza, load }) {
                 <h1>
                     Meus hábitos <Mais onClick={mais}>+</Mais>
                 </h1>
-                <Adicionar display={display}><AddHabito setHabito={setHabito} atualiza={atualiza} setDisplay={setDisplay}/></Adicionar>
+                <Adicionar display={display}><AddHabito atualiza={atualiza} setDisplay={setDisplay}/></Adicionar>
                 {habitos.map((e, index) => <ListaHabitos key={index} name={e.name} days={e.days} id={e.id} atualiza={atualiza} />)}
                 {habitos.length > 0 ? "" :
                     <p>Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!</p>}

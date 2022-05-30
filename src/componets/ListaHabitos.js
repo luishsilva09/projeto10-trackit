@@ -4,46 +4,43 @@ import React, { useContext } from "react"
 import styled from "styled-components";
 import Lixo from '../assets/lixo.svg'
 
-export default function ListaHabitos({name,days, id, atualiza}) {
+export default function ListaHabitos({ name, days, id, atualiza }) {
     const dias = ['D', 'S', 'T', 'Q', 'Q', 'S', 'S']
-    const{userData} = useContext(UserContext);
-    
-    
-    
-    function RenderCheck(e,index){
-        const [cor, setCor] = React.useState(false)
-        let teste = days.includes(index)
-        if( teste === true){
-            return(
+    const { userData } = useContext(UserContext);
+
+    function RenderCheck(e, index) {
+        let diasCheck = days.includes(index)
+        if (diasCheck === true) {
+            return (
                 <Check key={index} cor={true}>{e}</Check>
             )
-            
-        }else{
-            return(
-                <Check  key={index} cor={cor}>{e}</Check>
+
+        } else {
+            return (
+                <Check key={index} cor={false}>{e}</Check>
             )
         }
     }
-    function deletar(id){
+    function deletar(id) {
         let confirm = window.confirm("tem certeza que quer deletar esse habito?")
-        if(confirm === true){
+        if (confirm === true) {
             const config = {
-                headers:{
+                headers: {
                     "Authorization": `Bearer ${userData.token}`
                 }
             }
-            const promise = axios.delete(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}`,config)
-            promise.then(()=> atualiza())
+            const promise = axios.delete(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}`, config)
+            promise.then(() => atualiza())
         }
-       
+
     }
     return (
         <>
             <Container>
-                <h1>{name}<Delete src={Lixo} alt="deletar" onClick={()=> deletar(id)}/></h1>
-                
+                <h1>{name}<Delete src={Lixo} alt="deletar" onClick={() => deletar(id)} /></h1>
+
                 <Dias>
-                    {dias.map((e,index) => RenderCheck(e,index))}
+                    {dias.map((e, index) => RenderCheck(e, index))}
                 </Dias>
 
             </Container>

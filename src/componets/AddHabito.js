@@ -1,21 +1,21 @@
 import axios from "axios"
-import React,{ useContext } from "react"
+import React, { useContext } from "react"
 import styled from "styled-components"
 import UserContext from "../Context/UserContext";
 import { ThreeDots } from 'react-loader-spinner';
 
 
-export default function AddHabito({ setHabito ,atualiza,setDisplay}) {
+export default function AddHabito({  atualiza, setDisplay }) {
     const dias = ['D', 'S', 'T', 'Q', 'Q', 'S', 'S']
     const [diasSelecionado, setDiasSelecionados] = React.useState([])
-    const[nomeHabito,setNomeHabito] = React.useState([])
-    const{userData} = useContext(UserContext);
+    const [nomeHabito, setNomeHabito] = React.useState([])
+    const { userData } = useContext(UserContext);
     const [load, setLoad] = React.useState(false);
-   
-    
+
+
     function cancelar() {
         setDisplay("none")
-        
+
     }
     function RenderCheck(e, index) {
         const [color, setColor] = React.useState(false)
@@ -23,61 +23,61 @@ export default function AddHabito({ setHabito ,atualiza,setDisplay}) {
         function seleciona(element) {
             if (color === true) {
                 setColor(false)
-                setDiasSelecionados( diasSelecionado.filter((e) => e !== index ? index : ''))
+                setDiasSelecionados(diasSelecionado.filter((e) => e !== index ? index : ''))
             } else {
                 setColor(true)
                 setDiasSelecionados([...diasSelecionado, index])
-            }     
+            }
         }
         return (
-            <Check  key={index} onClick={load ? none : (element) => seleciona(element)} cor={color}>{e}</Check>
+            <Check key={index} onClick={load ? none : (element) => seleciona(element)} cor={color}>{e}</Check>
         )
     }
-    function salvar(){
+    function salvar() {
         const body = {
             name: nomeHabito,
             days: diasSelecionado
         }
         const config = {
-            headers:{
+            headers: {
                 "Authorization": `Bearer ${userData.token}`
             }
         }
         setLoad(true)
-        const promise = axios.post('https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits',body, config)
-        promise.then(function(response) {
+        const promise = axios.post('https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits', body, config)
+        promise.then(function (response) {
             setLoad(false)
             setDisplay("none")
             setNomeHabito('')
-            setDiasSelecionados([]) 
+            setDiasSelecionados([])
             atualiza()
         })
-        promise.catch(function(response){
+        promise.catch(function (response) {
             setLoad(false)
             let message = (response.response.data.message)
             alert("Tente mais tarde" + message)
         })
-        
+
     }
-    function none(){
+    function none() {
 
     }
     return (
         <Container>
             <input
                 type='text'
-                placeholder='nome do habito' 
+                placeholder='nome do habito'
                 value={nomeHabito}
                 onChange={(e) => setNomeHabito(e.target.value)}
                 disabled={load}
-                />
+            />
             <Dias>
                 {dias.map((e, index) => RenderCheck(e, index))}
 
             </Dias>
             <Finalizar>
                 <Cancelar onClick={cancelar}>Cancelar</Cancelar>
-                <Salvar onClick={load ? none: salvar}>{load ? <ThreeDots color="#FFFFFF" height={50} width={50} /> : <>Salvar</>}</Salvar>
+                <Salvar onClick={load ? none : salvar}>{load ? <ThreeDots color="#FFFFFF" height={50} width={50} /> : <>Salvar</>}</Salvar>
             </Finalizar>
 
         </Container>

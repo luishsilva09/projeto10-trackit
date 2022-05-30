@@ -8,23 +8,21 @@ import UserContext from "../Context/UserContext";
 
 export default function Login() {
     const navigate = useNavigate();
-    const { userData,setUserData } = useContext(UserContext);
+    const { setUserData } = useContext(UserContext);
     const [load, setLoad] = React.useState(false);
     const [login, setLogin] = React.useState({
         email: '',
         password: ''
     });
-    
-
     function logar(event) {
         event.preventDefault();
         setLoad(true);
         const promise = axios.post('https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/login', login);
         promise.then(function (response) {
             setUserData(response.data)
-            
+
             navigate('/hoje')
-            
+
         });
         promise.catch(function () {
             setLoad(false)

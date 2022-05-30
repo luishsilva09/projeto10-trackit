@@ -14,20 +14,19 @@ import React from "react";
 export default function App() {
     const [userData, setUserData] = React.useState([])
     const [progresso, setProgresso] = React.useState(0)
-   
     return (
-        <UserContext.Provider value={{userData, setUserData}}>
-        <ProgressoContext.Provider value={{progresso, setProgresso}}>
-            <BrowserRouter>
-                <GlobalStyle />
-                <Routes>
-                    <Route path='/' element={<Login />} />
-                    <Route path='/cadastro' element={<Cadastro />} />
-                    <Route path='/habitos' element={<Habitos />} />
-                    <Route path='/hoje' element={<Hoje />} />
-                    <Route path='/historico' element={<Historico />} />
-                </Routes>
-            </BrowserRouter>
+        <UserContext.Provider value={{ userData, setUserData }}>
+            <ProgressoContext.Provider value={{ progresso, setProgresso }}>
+                <BrowserRouter>
+                    <GlobalStyle />
+                    <Routes>
+                        <Route path='/' element={<Login />} />
+                        <Route path='/cadastro' element={<Cadastro />} />
+                        <Route path='/habitos' element={<Habitos />} />
+                        <Route path='/hoje' element={<Hoje />} />
+                        <Route path='/historico' element={<Historico />} />
+                    </Routes>
+                </BrowserRouter>
             </ProgressoContext.Provider>
         </UserContext.Provider>
     )
