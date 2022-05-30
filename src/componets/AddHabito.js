@@ -46,14 +46,11 @@ export default function AddHabito({ setHabito ,atualiza,setDisplay}) {
         setLoad(true)
         const promise = axios.post('https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits',body, config)
         promise.then(function(response) {
-            setDisplay("none")
             setLoad(false)
+            setDisplay("none")
             setNomeHabito('')
-            setDiasSelecionados([])
+            setDiasSelecionados([]) 
             atualiza()
-            
-            
-            
         })
         promise.catch(function(response){
             setLoad(false)

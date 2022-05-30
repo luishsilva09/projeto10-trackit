@@ -53,7 +53,7 @@ const Feito = styled.img`
     background-color: ${props => props.feito ? '#8FC549' : '#E7E7E7'};
 `
 const Ponto= styled.p`
-    
+    margin-left: 5px;
      color:${props => props.cor? "#8FC549": "#666666"};
 `
 const Post = styled.div`
@@ -75,6 +75,7 @@ const Post = styled.div`
     }
    
     h4{
+        margin-bottom: 5px;
         font-size: 20px;
         color:#666666;
     }

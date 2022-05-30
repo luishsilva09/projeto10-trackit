@@ -56,8 +56,6 @@ export default function Hoje() {
                 {progresso === 0 ? <h2>Nenhum habito concluido ainda</h2> : <h3>{progresso.toFixed()}% dos habitos concluidos</h3>}
     
                 { habitosHoje.map((e,index) => <RenderPost key={index} dados={e} config={config} atualizaHoje={atualizaHoje} progress={progress}/>)}
-
-
             </Container>}
             <Footer />
         </>

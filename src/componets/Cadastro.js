@@ -17,6 +17,9 @@ export default function Cadastro() {
     function cadastrar(event) {
         event.preventDefault()
         if (isImage(cadastro.image) === true || cadastro.image === "") {
+            if(cadastro.image === ''){
+                cadastro.image = 'https://icones.pro/wp-content/uploads/2021/02/icone-utilisateur-gris.png'
+            }
             setLoad(true)
             const promise = axios.post('https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/sign-up', cadastro)
             promise.then(() => navigate('/'))
@@ -25,6 +28,7 @@ export default function Cadastro() {
                 setLoad(false)
             })
         }else{
+            cadastro.image = ""
             return(alert("imagem invalida"))
         }
     }
